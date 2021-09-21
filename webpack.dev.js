@@ -1,6 +1,8 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const WorkboxPlugin = require("workbox-webpack-plugin");
+// import regeneratorRuntime from "regenerator-runtime";
 
 module.exports = {
     entry: './src/client/index.js',
@@ -14,7 +16,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.m?js$/,
+                test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: 'babel-loader',
@@ -23,6 +25,10 @@ module.exports = {
                     }
                 }
             },
+            {
+
+            }
+            ,
             {
                 test: /\.scss$/,
                 exclude: /node_modules/,
@@ -42,14 +48,6 @@ module.exports = {
                     }
                 }
             }
-
-            /* HINT: structure
-        {
-          test: REGEX_TO_MATCH_FILES ex. /\.js$/,
-          exclude: /node_modules/,
-          loader: '',
-        }
-       */
         ]
     },
     plugins: [
@@ -62,7 +60,8 @@ module.exports = {
             verbose: true,
             cleanStaleWebpackAssets: true,
             protectWebpackAssets: false
-        })
+        }),
+         new WorkboxPlugin.GenerateSW(),
         // TODO: configure workbox-webpack-plugin
     ]
 }

@@ -4,7 +4,7 @@ const path = require("path");
 const axios = require('axios');
 
 // Constants
-const BASE_URL = "https://api.meaningcloud.com/sentiment-2.1/"
+const BASE_URL = "https://api.meaningcloud.com/sentiment-2.1"
 let projectData = {}
 
 // Configure the environment variables
@@ -33,27 +33,37 @@ app.use(cors());
 app.use(express.static('website'));
 
 app.get('/', function (req, res) {
-    //res.sendFile('dist/index.html')
-    res.sendFile(path.resolve('src/client/views/index.html'))
+    res.sendFile('dist/index.html')
+    //res.sendFile(path.resolve('src/client/views/index.html'))
 })
 // a route that handling post request for new URL that coming from the frontend
-app.post('/add', async(req, res) => {
-    console.log(req);
-    let articleUrl = req.body.url
-    let headers = {}
-    let params = {
-        key : LICENSE_KEY,
-        lang: "en",
-        url: articleUrl
+app.get('/sentiment_analysis/*', async(req, res) => {
+    try {
+        //console.log("req", req);
+        let articleUrl = req.params['0']
+        let headers = {}
+        let params = {
+            key: LICENSE_KEY,
+            lang: "en",
+            url: articleUrl
+        }
+        //console.log("articleURL", articleUrl)
+        let response = await axios.get(BASE_URL, {params, headers});
+        console.log("sentence_list", response.data.sentence_list)
+        const responseData = {
+            score_tag: response.data.score_tag,
+            agreement: response.data.agreement,
+            subjectivity: response.data.subjectivity,
+            confidence: response.data.confidence,
+            irony: response.data.irony
+        }
+        //console.log("responseData", responseData)
+        // console.log("response", response.data)
+        res.send(responseData)
     }
-    let response = await axios.get(BASE_URL,{params, headers});
-    const responseData = {
-        text: response.sentence_list.text,
-        score_tag : response.sentence_list.score_tag,
-        agreement : response.sentence_list.agreement,
-        subjectivity : response.subjectivity,
-        confidence : response.confidence,
-        irony : response.irony
+    catch(error){
+        console.dir(error);
+        throw error;
     }
 
 });
