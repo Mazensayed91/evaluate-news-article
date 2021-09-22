@@ -1,6 +1,6 @@
-# evaluate-news-article
+# Evaluate-News-Article-NLP
 
-The aim of this project is to practice webpack-nodejs to evaluate news article
+The aim of this project is to practice webpack-nodejs to evaluate news article using NLP
 
 The main task of this React project are the following:
 
@@ -8,10 +8,16 @@ The main task of this React project are the following:
     2.  Analyze this article and return the sentiment analysis results
 
 
+## Meaning Cloud API
+Here is the documentation of how to do sentiment analysis with meaning cloud api: https://learn.meaningcloud.com/developer/sentiment-analysis/2.1/doc/what-is-sentiment-analysis
+
+
 ## TL;DR
 
 To get started developing right away:
 
+* create .env file at the root of the project
+* add LICENSE_KEY = XXXxxxXXXXxxxxXXXxx [The api key you get from meaningcloud]
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 * to build the client for development with `npm build-dev`
