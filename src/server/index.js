@@ -1,11 +1,9 @@
 // Imports
 const express = require('express');
-const path = require("path");
 const axios = require('axios');
 
 // Constants
 const BASE_URL = "https://api.meaningcloud.com/sentiment-2.1"
-let projectData = {}
 
 // Configure the environment variables
 require('dotenv').config({path:__dirname+'/./../../.env'});
@@ -67,22 +65,6 @@ app.get('/sentiment_analysis/*', async(req, res) => {
     }
 
 });
-/* TODO:
-    1. GET the url from the request body
-    2. Build the URL it should be something like `${BASE_API_URL}?key=${MEAN_CLOUD_API_KEY}&url=${req.body.url}&lang=en`
-    3. Fetch Data from API
-    4. Send it to the client
-    5. REMOVE THIS TODO AFTER DOING IT 😎😎
-    server sends only specified data to the client with below codes
-     const sample = {
-       text: '',
-       score_tag : '',
-       agreement : '',
-       subjectivity : '',
-       confidence : '',
-       irony : ''
-     }
-*/
 
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
@@ -93,5 +75,3 @@ app.listen(PORT, (error) => {
     if (error) throw new Error(error)
     console.log(`Server listening on port ${PORT}!`)
 })
-
-// TODO: export app to use it in the unit testing
