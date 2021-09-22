@@ -3,15 +3,64 @@
   <head>
     <meta charset="utf-8" />
     <title>Sentiment Analyzer</title>
+    <style>
+      .container{
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+      }
+      .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      }
+      .styled-table th,
+      .styled-table td {
+        padding: 12px 15px;
+      }
+      .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+      }
+      .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+      }
+
+      .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+      }
+
+      .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+      }
+      .loader {
+        border: 5px solid #f3f3f3; /* Light grey */
+        border-top: 5px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        display: none;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
   </head>
 
   <body>
     <main>
       <div class="container">
-        <p>Enter a URL of an article / a blog to discover its sentiment.</p>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaWpmwRnT0EL_IFNYEc918QwtGE0PAw_RXqQ&usqp=CAU" alt="sentiment_analysis">
         <section>
+          <div class="center">
           <form id="form">
-            <label for="article-url">URL</label>
             <input id="article-url" type="text" name="input" value="" placeholder="Enter Article URL here" />
             <button
               type="submit"
@@ -20,21 +69,42 @@
               Submit
             </button>
           </form>
+          </div>
         </section>
 
         <section>
-          <strong>Form Results:</strong>
-          <div id="text"></div>
-          <div id="agreement"></div>
-          <div id="subjectivity"></div>
-          <div id="confidence"></div>
-          <div id="irony"></div>
-          <div id="score_tag"></div>
+          <div class="loader" id="loader" ></div>
+          <table class="styled-table" id="sentiment-table" style = "display: none">
+            <thead>
+            <tr>
+              <th>Agreement</th>
+              <th>Subjectivity</th>
+              <th>Confidence</th>
+              <th>Irony</th>
+              <th>Score Tag</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td id = "agreement"></td>
+              <td id = "subjectivity"></td>
+              <td id="confidence"></td>
+              <td id="irony"></td>
+              <td id="score_tag"></td>
+            </tr>
+            </tbody>
+          </table>
         </section>
       </div>
     </main>
     <script>
       // Check that service workers are supported
+      if ('serviceWorker' in navigator) {
+      // Use the window load event to keep the page load performant
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+        })
+      }
 
     </script>
   </body>

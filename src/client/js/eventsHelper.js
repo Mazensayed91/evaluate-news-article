@@ -5,7 +5,7 @@ module.exports.handleOnClick = (e) => {
 
     // first get divs to be filled
     let text = document.getElementById("text");
-    console.log("text", text)
+    console.log("text", text);
     let agreement = document.getElementById("agreement");
     let subjectivity = document.getElementById("subjectivity");
     let confidence = document.getElementById("confidence");
@@ -17,8 +17,14 @@ module.exports.handleOnClick = (e) => {
 
     let url = document.getElementById("article-url").value;
     if(isValidURL(url)){
+        let loader = document.getElementById("loader");
+        loader.style.display = "block"
         let response = axios.get("http://localhost:8081/sentiment_analysis/" + url)
             .then((json) => {
+                loader.style.display = "none"
+                let table = document.getElementById("sentiment-table");
+                console.log(table);
+                table.style.display = 'block';
                 agreement.innerText = json.data.agreement;
                 subjectivity.innerText = json.data.subjectivity;
                 confidence.innerText = json.data.confidence;
