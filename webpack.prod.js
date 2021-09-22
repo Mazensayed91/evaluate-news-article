@@ -53,7 +53,7 @@ module.exports = {
             new CssMinimizePlugin(),
             new TerserPlugin(),
             new HtmlWebPackPlugin({
-                template: "./src/index.html",
+                template: "./src/client/views/index.html",
                 minify:{
                     removeComments: true,
                     collapseWhitespace: true,

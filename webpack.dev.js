@@ -31,7 +31,6 @@ module.exports = {
             ,
             {
                 test: /\.scss$/,
-                exclude: /node_modules/,
                 use: [
                     'style-loader', // 3- inject css to the dom
                     'css-loader', // 2- css => js
@@ -62,6 +61,5 @@ module.exports = {
             protectWebpackAssets: false
         }),
          new WorkboxPlugin.GenerateSW(),
-        // TODO: configure workbox-webpack-plugin
     ]
 }
